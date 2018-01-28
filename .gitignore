@@ -1,0 +1,14 @@
+*.pyc
+*.egg-info
+*.so
+*.pyd
+*.dylib
+
+__pycache__
+
+MANIFEST
+
+build
+dist
+
+docs/_build

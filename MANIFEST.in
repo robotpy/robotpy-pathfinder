@@ -1,0 +1,4 @@
+include LICENSE
+include pathfinder/*.cpp
+recursive-include pathfinder_src/Pathfinder-Core/src *.c
+recursive-include pathfinder_src/Pathfinder-Core/include *.h
