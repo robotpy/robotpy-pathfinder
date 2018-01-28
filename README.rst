@@ -1,6 +1,10 @@
 robotpy-pathfinder
 ==================
 
+.. image:: https://readthedocs.org/projects/robotpy-pathfinder/badge/?version=stable
+:target: http://robotpy-pathfinder.readthedocs.io/en/stable/?badge=stable
+:alt: Documentation Status
+
 These are python bindings around Jaci R's PathFinder library. From the original
 documentation:
 
@@ -34,4 +38,4 @@ not currently publishing wheels of this library.
 Usage
 -----
 
-See the examples.
+See the examples. Documentation can be found at `http://robotpy-pathfinder.readthedocs.io <http://robotpy-pathfinder.readthedocs.io>`_

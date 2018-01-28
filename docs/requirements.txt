@@ -1,1 +1,2 @@
-sphinx-autodocs-typehints
+pybind11
+sphinx-autodoc-typehints

@@ -3,6 +3,7 @@
 *.so
 *.pyd
 *.dylib
+version.py
 
 __pycache__
 
