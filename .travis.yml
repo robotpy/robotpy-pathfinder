@@ -1,0 +1,46 @@
+
+jobs:
+  include:
+    
+  # Normal tests
+  - stage: test
+    sudo: false
+    language: python
+    python: "3.5"
+    install:
+    - pip install pytest pybind11
+    - python setup.py sdist
+    script:
+    - pip install dist/robotpy-pathfinder-*.tar.gz
+  
+  - stage: test
+    sudo: false
+    language: python
+    python: "3.6"
+    install:
+    - pip install pytest pybind11
+    - python setup.py sdist
+    script:
+    - pip install dist/robotpy-pathfinder-*.tar.gz
+  
+  - stage: deploy-pypi
+    sudo: false
+    language: python
+    python: "3.6"
+    if: tag IS present
+    install: true
+    script: true
+    deploy:
+    - provider: pypi
+      user: $PYPI_USERNAME
+      password: $PYPI_PASSWORD
+      on:
+        tags: true
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/2fb1c026e64fdd70d27b
+    on_success: change
+    on_failure: always
+    on_start: never
