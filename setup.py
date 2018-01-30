@@ -123,9 +123,22 @@ class BuildExt(build_ext):
                 opts.append('-g0') # remove debug symbols
             else:
                 opts.append('-O0')
-            opts.append(cpp_flag(self.compiler))
+            c11arg = cpp_flag(self.compiler)
+            opts.append(c11arg)
             if has_flag(self.compiler, '-fvisibility=hidden'):
                 opts.append('-fvisibility=hidden')
+            
+            # HACK: clang doesn't allow compiling .c files with the -std=c++11
+            #       flag... so remove it
+            if sys.platform == 'darwin':
+                _orig_compile = self.compiler._compile
+                def _compile(obj, src, ext, cc_args, extra_postargs, pp_opts):
+                    if src.endswith('.c'):
+                        extra_postargs = extra_postargs[:]
+                        extra_postargs.remove(c11arg)
+                    return _orig_compile(obj, src, ext, cc_args, extra_postargs, pp_opts)
+                self.compiler._compile = _compile
+                
         elif ct == 'msvc':
             opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
         for ext in self.extensions:
