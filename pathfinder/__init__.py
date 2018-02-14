@@ -25,3 +25,18 @@ from . import (
     followers,
     modifiers,
 )
+
+# compability with Pathfinder-Java
+import math
+
+r2d = math.degrees
+d2r = math.radians
+
+def boundHalfDegrees(degrees):
+    '''Bound an angle (in degrees) to -180 to 180 degrees.'''
+    degrees = math.fmod(degrees, 360.0)
+    if degrees >= 180.0:
+        degrees = degrees - 360.0
+    elif degrees <= -180.0:
+        degrees = degrees + 360.0
+    return degrees

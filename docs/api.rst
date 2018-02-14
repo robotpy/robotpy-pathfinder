@@ -14,6 +14,9 @@ Pathfinder API
     :undoc-members:
 
 .. autofunction:: pathfinder.generate
+.. autofunction:: pathfinder.d2r
+.. autofunction:: pathfinder.r2d
+.. autofunction:: pathfinder.boundHalfDegrees
 
 
 Followers
