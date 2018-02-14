@@ -2,8 +2,8 @@ robotpy-pathfinder
 ==================
 
 .. image:: https://readthedocs.org/projects/robotpy-pathfinder/badge/?version=stable
-:target: http://robotpy-pathfinder.readthedocs.io/en/stable/?badge=stable
-:alt: Documentation Status
+   :target: http://robotpy-pathfinder.readthedocs.io/en/stable/?badge=stable
+   :alt: Documentation Status
 
 These are python bindings around Jaci R's PathFinder library. From the original
 documentation:
@@ -15,27 +15,7 @@ and follow a trajectory based upon given waypoints.
 
 Note: This requires C++ 11 and Python 3.5+
 
-Installation (RobotPy on a RoboRIO)
------------------------------------
-
-Use robotpy-installer to install the precompiled package.
-
-::
-
-    robotpy-installer download-opkg python36-robotpy-pathfinder
-    robotpy-installer install-opkg python36-robotpy-pathfinder
-
-Installation (other)
---------------------
-
-Note that this requires a C++11 compiler to be present on your system, as I'm
-not currently publishing wheels of this library.
-
-::
-
-    pip install robotpy-pathfinder
-
 Usage
 -----
 
-See the examples. Documentation can be found at `http://robotpy-pathfinder.readthedocs.io <http://robotpy-pathfinder.readthedocs.io>`_
+Installation and usage documentation can be found at `http://robotpy-pathfinder.readthedocs.io <http://robotpy-pathfinder.readthedocs.io>`_
