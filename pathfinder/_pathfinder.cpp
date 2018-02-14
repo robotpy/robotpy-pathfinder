@@ -58,14 +58,20 @@ static std::tuple<TrajectoryInfo, Trajectory> _generate(
     std::vector<Waypoint> path, void* fit,
     int sample_count, double dt, double max_velocity, double max_acceleration, double max_jerk) {
     
+    // pathfinder_prepare checks for this too, but it fails for other reasons
+    // also so check here first
+    if (path.size() < 2) {
+        throw std::invalid_argument("The path is not long enough (must be >= 2)");
+    }
+    
     TrajectoryCandidate cd;
     if (pathfinder_prepare(path.data(), path.size(), (void (*)(Waypoint,Waypoint,Spline*))fit, sample_count, dt, max_velocity, max_acceleration, max_jerk, &cd) < 0) {
-        throw new std::invalid_argument("The path is not long enough");
+        throw std::invalid_argument("The trajectory provided was invalid! pathfinder_prepare failed");
     }
     
     Trajectory segs(cd.length);
     if (pathfinder_generate(&cd, segs.data()) < 0) {
-        throw new std::invalid_argument("The trajectory provided was invalid! Invalid trajectory could not be generated");
+        throw std::invalid_argument("The trajectory provided was invalid! pathfinder_generate failed");
     }
     
     return std::make_tuple(std::move(cd.info), std::move(segs));
