@@ -168,6 +168,21 @@ PYBIND11_MODULE(_pathfinder, m) {
         .def_readwrite("acceleration", &Segment::acceleration)
         .def_readwrite("jerk", &Segment::jerk)
         .def_readwrite("heading", &Segment::heading)
+        .def(py::pickle(
+          [](const Segment &s) { // __getstate__
+              return py::make_tuple(s.dt, s.x, s.y, s.position, s.velocity, s.acceleration, s.jerk, s.heading);
+          },
+          [](py::tuple t) { // __setstate__
+            Segment s {t[0].cast<double>(),
+                       t[1].cast<double>(),
+                       t[2].cast<double>(),
+                       t[3].cast<double>(),
+                       t[4].cast<double>(),
+                       t[5].cast<double>(),
+                       t[6].cast<double>(),
+                       t[7].cast<double>()};
+            return s;
+        }))
         .def("__repr__", [](Segment &__inst) {
             return std::string("<Segment") + REPR(dt) + REPR(x) + REPR(y) + REPR(position) + REPR(velocity) + REPR(acceleration) + REPR(jerk) + REPR(heading) + ">";
         });
