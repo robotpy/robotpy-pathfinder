@@ -47,6 +47,32 @@ You can also modify the trajectory for either Swerve or Tank drive::
     # OR
     modifier = pf.modifiers.SwerveModifier(trajectory).modify(0.5, 0.6)
 
+.. note:: It can take a really long time to generate a trajectory on a RoboRIO,
+          but very little time on a modern computer. You can take advantage of
+          this by pre-generating the trajectory before deployment. When using
+          with RobotPy, you can use the following pattern to pregenerate them
+          automatically before you deploy code to the robot::
+          
+              import os.path
+              import pickle
+              
+              # because of a quirk in pyfrc, this must be in a subdirectory
+              # or the file won't get copied over to the robot
+              pickle_file = os.path.join(os.path.dirname(__file__), 'trajectory.pickle')
+              
+              if wpilib.RobotBase.isSimulation():
+                  # generate the trajectory here
+                  
+                  # and then write it out
+                  with open(pickle_file, 'wb') as fp:
+                      pickle.dump(trajectory, fp)
+              else:
+                  with open('fname', 'rb') as fp:
+                      trajectory = pickle.load(fp)
+            
+          This works because whenever you run ``robot.py deploy``, your robot
+          code modules are imported and executed.
+
 Following a Trajectory
 ----------------------
 
