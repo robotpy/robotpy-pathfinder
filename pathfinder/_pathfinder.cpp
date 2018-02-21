@@ -160,6 +160,9 @@ PYBIND11_MODULE(_pathfinder, m) {
     
     py::class_<Segment>(m, "Segment")
         .def(py::init<>())
+        .def(py::init<double, double, double, double, double, double, double, double>(),
+            py::arg("dt"), py::arg("x"), py::arg("y"), py::arg("position"), py::arg("velocity"), py::arg("acceleration"), py::arg("jerk"), py::arg("heading")
+        )
         .def_readwrite("dt", &Segment::dt)
         .def_readwrite("x", &Segment::x)
         .def_readwrite("y", &Segment::y)
@@ -280,10 +283,13 @@ PYBIND11_MODULE(_pathfinder, m) {
     m.def("pathfinder_modify_swerve", &_pathfinder_modify_swerve, release_gil());
     m.def("pathfinder_modify_tank", &_pathfinder_modify_tank, release_gil());
     
-    m.def("pathfinder_deserialize", &_pathfinder_deserialize, release_gil(), py::arg("fname"));
+    m.def("pathfinder_deserialize", &_pathfinder_deserialize, release_gil(), py::arg("fname"),
+          "Read a Trajectory from a Binary (non human readable) file");
     m.def("pathfinder_serialize", &_pathfinder_serialize, release_gil(),
-          py::arg("fname"), py::arg("trajectory"));
+          py::arg("fname"), py::arg("trajectory"),
+          "Write the Trajectory to a Binary (non human readable) file");
     
     m.def("pathfinder_serialize_csv", &_pathfinder_serialize_csv, release_gil(),
-          py::arg("fname"), py::arg("trajectory"));
+          py::arg("fname"), py::arg("trajectory"),
+          "Write the Trajectory to a CSV File");
 }

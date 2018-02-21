@@ -41,9 +41,29 @@ Modifiers
     :members:
     :undoc-members:
 
-Misc
-----
+Serialization
+-------------
+
+For serializing/deserializing in python programs, it's probably easiest to use
+Python's ``pickle`` module to directly serialize a trajectory::
+    
+    import pickle
+    
+    with open('fname', 'wb') as fp:
+        pickle.dump(trajectory, fp)
+        
+    with open('fname', 'rb') as fp:
+        trajectory = pickle.load(fp)
+
+One advantage to this approach is that you could put multiple trajectories in a
+data structure such as a dictionary, and serialize them all in a single file.
+The pathfinder compatibility serialization routines only support a single
+trajectory per file.
+
+However, for compatibility with other pathfinder implementations, the following
+functions are made available.
 
 .. autofunction:: pathfinder.deserialize
+.. autofunction:: pathfinder.deserialize_csv
 .. autofunction:: pathfinder.serialize
 .. autofunction:: pathfinder.serialize_csv

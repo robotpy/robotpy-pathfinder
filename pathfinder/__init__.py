@@ -40,3 +40,11 @@ def boundHalfDegrees(degrees):
     elif degrees <= -180.0:
         degrees = degrees + 360.0
     return degrees
+
+def deserialize_csv(fname):
+    '''Read a Trajectory from a CSV File'''
+    import csv
+    with open(fname, 'r') as fp:
+        csviter =  csv.reader(fp)
+        next(csviter)
+        return [Segment(*map(float, row)) for row in csviter]
