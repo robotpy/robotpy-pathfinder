@@ -203,3 +203,10 @@ Some example code for dealing with heading is given below::
 
 The ``setDirection`` implementation is up to you. Usually, for a swerve drive,
 this will be some kind of PID control loop.
+
+Example code
+------------
+
+The RobotPy examples repository has a `pathfinder example program <https://github.com/robotpy/examples/tree/master/physics-pathfinder>`_
+in it, which also contains a working physics module so you can experiment with
+pathfinder using the pyfrc simulator.
