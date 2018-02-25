@@ -38,8 +38,11 @@ waypoints and calling :func:`pathfinder.generate`::
         pf.Waypoint(0, 0, 0),                       # Waypoint @ x=0, y=0,   exit angle=0 radians
     ]
     
-    info, trajectory = pf.generate(points, pf.FIT_HERMITE_CUBIC,
-                                   pf.SAMPLES_HIGH, 0.05, 1.7, 2.0, 60.0)
+    info, trajectory = pf.generate(points, pf.FIT_HERMITE_CUBIC, pf.SAMPLES_HIGH,
+                                   dt=0.05, # 50ms
+                                   max_velocity=1.7,
+                                   max_acceleration=2.0,
+                                   max_jerk=60.0)
 
 You can also modify the trajectory for either Swerve or Tank drive::
     
