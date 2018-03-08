@@ -22,6 +22,7 @@ not currently publishing wheels of this library.
 
 .. code-block:: bash
 
+    pip3 install 'pybind11>=2.2'
     pip3 install robotpy-pathfinder
 
 Generating a Trajectory
