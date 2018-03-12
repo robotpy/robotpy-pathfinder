@@ -27,6 +27,7 @@ class DistanceFollower(_DistanceFollower):
     """
     
     def __init__(self, trajectory: typing.List[Segment]):
+        super().__init__()
         self.trajectory = trajectory
         self.cfg = FollowerConfig()
     
@@ -94,6 +95,7 @@ class EncoderFollower(_EncoderFollower):
     """
     
     def __init__(self, trajectory: typing.List[Segment]):
+        super().__init__()
         self.trajectory = trajectory
         self.cfg = EncoderConfig()
     
