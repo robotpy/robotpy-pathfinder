@@ -225,7 +225,11 @@ PYBIND11_MODULE(_pathfinder, m) {
     
     // followers/distance.h
     py::class_<FollowerConfig>(m, "FollowerConfig")
-        .def(py::init<>())
+        .def(py::init<>([](){
+            return std::unique_ptr<FollowerConfig>(new FollowerConfig{
+                0.0, 0.0, 0.0, 0.0, 0.0
+            });
+        }))
         .def_readwrite("kp", &FollowerConfig::kp)
         .def_readwrite("ki", &FollowerConfig::ki)
         .def_readwrite("kd", &FollowerConfig::kd)
@@ -233,7 +237,11 @@ PYBIND11_MODULE(_pathfinder, m) {
         .def_readwrite("ka", &FollowerConfig::ka);
     
     py::class_<DistanceFollower>(m, "DistanceFollower")
-        .def(py::init<>())
+        .def(py::init<>([](){
+            return std::unique_ptr<DistanceFollower>(new DistanceFollower{
+                0.0, 0.0, 0.0, 0, 0
+            });
+        }))
         .def_readwrite("last_error", &DistanceFollower::last_error)
         .def_readwrite("heading", &DistanceFollower::heading)
         .def_readwrite("output", &DistanceFollower::output)
@@ -242,7 +250,11 @@ PYBIND11_MODULE(_pathfinder, m) {
     
     // followers/encoder.h
     py::class_<EncoderConfig>(m, "EncoderConfig")
-        .def(py::init<>())
+        .def(py::init<>([](){
+            return std::unique_ptr<EncoderConfig>(new EncoderConfig{
+                0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            });
+        }))
         .def_readwrite("initial_position", &EncoderConfig::initial_position)
         .def_readwrite("ticks_per_revolution", &EncoderConfig::ticks_per_revolution)
         .def_readwrite("wheel_circumference", &EncoderConfig::wheel_circumference)
@@ -253,7 +265,11 @@ PYBIND11_MODULE(_pathfinder, m) {
         .def_readwrite("ka", &EncoderConfig::ka);
     
     py::class_<EncoderFollower>(m, "EncoderFollower")
-        .def(py::init<>())
+        .def(py::init<>([](){
+            return std::unique_ptr<EncoderFollower>(new EncoderFollower{
+                0.0, 0.0, 0.0, 0, 0
+            });
+        }))
         .def_readwrite("last_error", &EncoderFollower::last_error)
         .def_readwrite("heading", &EncoderFollower::heading)
         .def_readwrite("output", &EncoderFollower::output)
