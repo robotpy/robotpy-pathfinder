@@ -19,8 +19,10 @@ if __name__ == '__main__':
         pf.Waypoint(0, 0, 0),
     ]
     
+    dt = 0.05 # 50ms
+    
     info, trajectory = pf.generate(points, pf.FIT_HERMITE_CUBIC, pf.SAMPLES_HIGH,
-                                   dt=0.05, # 50ms
+                                   dt=dt,
                                    max_velocity=1.7,
                                    max_acceleration=2.0,
                                    max_jerk=60.0)
@@ -32,5 +34,11 @@ if __name__ == '__main__':
     # plot the trajectory
     x, y = zip(*[(seg.y, seg.x) for seg in trajectory])
     plt.plot(x, y)
+    
+    # annotate with time
+    for i in range(0, len(trajectory), int(0.5/dt)):
+        plt.annotate('t=%.2f' % (i*dt,), xy=(x[i], y[i]),
+                     xytext=(-20, 20), textcoords='offset points',
+                     arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
     
     plt.show()
