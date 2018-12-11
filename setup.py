@@ -155,13 +155,13 @@ ext_modules = [
         'pathfinder._pathfinder',
         [
             'pathfinder/_pathfinder.cpp',
-        ] + \
-            list(recursive_glob('pathfinder_src/Pathfinder-Core/src')),
+        ],
         include_dirs=[
             # Path to pybind11 headers
             get_pybind_include(),
             get_pybind_include(user=True),
-            'pathfinder_src/Pathfinder-Core/include',
+            'pathfinder_src/Pathfinder/src/include',
+            'pathfinder_src/libs/eigen',
         ],
         language='c++',
     ),
