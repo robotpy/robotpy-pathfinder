@@ -1,23 +1,17 @@
-
 import math
 import typing
 
 from ._pathfinder import (
     DistanceFollower as _DistanceFollower,
     EncoderFollower as _EncoderFollower,
-    
     EncoderConfig,
     FollowerConfig,
     Segment,
-    
     pathfinder_follow_distance2,
     pathfinder_follow_encoder2,
 )
 
-__all__ = [
-    'DistanceFollower',
-    'EncoderFollower',
-]
+__all__ = ["DistanceFollower", "EncoderFollower"]
 
 
 class DistanceFollower(_DistanceFollower):
@@ -25,18 +19,20 @@ class DistanceFollower(_DistanceFollower):
         The DistanceFollower is an object designed to follow a trajectory based on distance covered input. This class can be used
         for Tank or Swerve drive implementations.
     """
-    
+
     def __init__(self, trajectory: typing.List[Segment]):
         super().__init__()
         self.trajectory = trajectory
         self.cfg = FollowerConfig()
-    
+
     def setTrajectory(self, trajectory: typing.List[Segment]) -> None:
         """Set a new trajectory to follow, and reset the cumulative errors and segment counts"""
         self.trajectory = trajectory
         self.reset()
-    
-    def configurePIDVA(self, kp: float, ki: float, kd: float, kv: float, ka: float) -> None:
+
+    def configurePIDVA(
+        self, kp: float, ki: float, kd: float, kv: float, ka: float
+    ) -> None:
         """Configure the PID/VA Variables for the Follower
         
         :param kp: The proportional term. This is usually quite high (0.8 - 1.0 are common values)
@@ -52,12 +48,12 @@ class DistanceFollower(_DistanceFollower):
         self.cfg.kd = kd
         self.cfg.kv = kv
         self.cfg.ka = ka
-    
+
     def reset(self) -> None:
         """Reset the follower to start again. Encoders must be reconfigured."""
         self.last_error = 0
         self.segment = 0
-    
+
     def calculate(self, distance_covered: float) -> float:
         """Calculate the desired output for the motors, based on the distance the robot has covered.
         This does not account for heading of the robot. To account for heading, add some extra terms in your control
@@ -73,16 +69,18 @@ class DistanceFollower(_DistanceFollower):
             self.heading = self.trajectory[-1].heading
             return 0.0
         else:
-            return pathfinder_follow_distance2(self.cfg, self, self.trajectory[self.segment], tlen, distance_covered)
-    
+            return pathfinder_follow_distance2(
+                self.cfg, self, self.trajectory[self.segment], tlen, distance_covered
+            )
+
     def getHeading(self) -> float:
         """:returns: the desired heading of the current point in the trajectory"""
         return self.heading
-    
+
     def getSegment(self) -> Segment:
         """:returns: the current segment being operated on"""
         return self.trajectory[self.segment]
-    
+
     def isFinished(self) -> bool:
         """:returns: whether we have finished tracking this trajectory or not."""
         return self.segment >= len(self.trajectory)
@@ -93,18 +91,20 @@ class EncoderFollower(_EncoderFollower):
         The EncoderFollower is an object designed to follow a trajectory based on encoder input. This class can be used
         for Tank or Swerve drive implementations.
     """
-    
+
     def __init__(self, trajectory: typing.List[Segment]):
         super().__init__()
         self.trajectory = trajectory
         self.cfg = EncoderConfig()
-    
+
     def setTrajectory(self, trajectory: typing.List[Segment]) -> None:
         """Set a new trajectory to follow, and reset the cumulative errors and segment counts"""
         self.trajectory = trajectory
         self.reset()
-    
-    def configurePIDVA(self, kp: float, ki: float, kd: float, kv: float, ka: float) -> None:
+
+    def configurePIDVA(
+        self, kp: float, ki: float, kd: float, kv: float, ka: float
+    ) -> None:
         """Configure the PID/VA Variables for the Follower
         
         :param kp: The proportional term. This is usually quite high (0.8 - 1.0 are common values)
@@ -120,8 +120,10 @@ class EncoderFollower(_EncoderFollower):
         self.cfg.kd = kd
         self.cfg.kv = kv
         self.cfg.ka = ka
-    
-    def configureEncoder(self, initial_position: int, ticks_per_revolution: int, wheel_diameter: float) -> None:
+
+    def configureEncoder(
+        self, initial_position: int, ticks_per_revolution: int, wheel_diameter: float
+    ) -> None:
         """Configure the Encoders being used in the follower.
         
         :param initial_position: The initial 'offset' of your encoder. This should be set to the encoder value just
@@ -132,12 +134,12 @@ class EncoderFollower(_EncoderFollower):
         self.cfg.initial_position = initial_position
         self.cfg.ticks_per_revolution = ticks_per_revolution
         self.cfg.wheel_circumference = math.pi * wheel_diameter
-    
+
     def reset(self) -> None:
         """Reset the follower to start again. Encoders must be reconfigured."""
         self.last_error = 0
         self.segment = 0
-    
+
     def calculate(self, encoder_tick: int) -> float:
         """Calculate the desired output for the motors, based on the amount of ticks the encoder has gone through.
         This does not account for heading of the robot. To account for heading, add some extra terms in your control
@@ -153,16 +155,18 @@ class EncoderFollower(_EncoderFollower):
             self.heading = self.trajectory[-1].heading
             return 0.0
         else:
-            return pathfinder_follow_encoder2(self.cfg, self, self.trajectory[self.segment], tlen, encoder_tick)
+            return pathfinder_follow_encoder2(
+                self.cfg, self, self.trajectory[self.segment], tlen, encoder_tick
+            )
 
     def getHeading(self) -> float:
         """:returns: the desired heading of the current point in the trajectory"""
         return self.heading
-    
+
     def getSegment(self) -> Segment:
         """:returns: the current segment being operated on"""
         return self.trajectory[self.segment]
-    
+
     def isFinished(self) -> bool:
         """:returns: whether we have finished tracking this trajectory or not."""
         return self.segment >= len(self.trajectory)

@@ -1,3 +1,6 @@
+language: python
+sudo: required
+dist: xenial
 
 jobs:
   include:
@@ -32,6 +35,14 @@ jobs:
     - python setup.py sdist
     script:
     - pip install dist/robotpy-pathfinder-*.tar.gz
+  
+  - stage: format-check
+    python:
+    - "3.6"
+    install:
+    - pip install black
+    script:
+    - black --check --diff .
   
   - stage: deploy-pypi
     sudo: false
