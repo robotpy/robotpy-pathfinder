@@ -23,6 +23,16 @@ jobs:
     script:
     - pip install dist/robotpy-pathfinder-*.tar.gz
   
+  - stage: test
+    sudo: false
+    language: python
+    python: "3.7"
+    install:
+    - pip install pytest pybind11
+    - python setup.py sdist
+    script:
+    - pip install dist/robotpy-pathfinder-*.tar.gz
+  
   - stage: deploy-pypi
     sudo: false
     language: python
