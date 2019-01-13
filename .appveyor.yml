@@ -10,7 +10,7 @@ environment:
 install:
   # AppVeyor does not initialise submodules by default, unlike Travis CI
   - git submodule update --init --recursive
-  - "%PYTHON%/python.exe -m pip install wheel pybind11"
+  - "%PYTHON%/python.exe -m pip --disable-pip-version-check install wheel pybind11"
 
 build_script:
   - "%PYTHON%/python.exe setup.py bdist_wheel"
@@ -18,7 +18,7 @@ build_script:
 test_script:
   # Ensure that the wheel is installable. It should be, but let's check anyway.
   - ps: |
-      &"${env:PYTHON}/python.exe" -m pip install (ls dist/*.whl)
+      &"${env:PYTHON}/python.exe" -m pip --disable-pip-version-check install (ls dist/*.whl)
 
 artifacts:
   - path: dist\*
@@ -26,6 +26,6 @@ artifacts:
 deploy_script:
   - ps: |
       If ($env:APPVEYOR_REPO_TAG -eq "true") {
-        &"${env:PYTHON}/python.exe" -m pip install twine
+        &"${env:PYTHON}/python.exe" -m pip --disable-pip-version-check install twine
         &"${env:PYTHON}/python.exe" -m twine upload dist/*.whl
       }
