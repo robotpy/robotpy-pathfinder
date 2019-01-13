@@ -5,7 +5,7 @@ robotpy-pathfinder
    :target: http://robotpy-pathfinder.readthedocs.io/en/stable/?badge=stable
    :alt: Documentation Status
 
-These are python bindings around Jaci R's PathFinder library. From the original
+These are python bindings around Jaci B's PathFinder library. From the original
 documentation:
 
 Cross-Platform, Multi-Use Motion Profiling and Trajectory Generation.

@@ -11,14 +11,24 @@ Use robotpy-installer to install the precompiled package.
 
 .. code-block:: bash
 
-    robotpy-installer download-opkg python36-robotpy-pathfinder
-    robotpy-installer install-opkg python36-robotpy-pathfinder
+    robotpy-installer download-opkg python37-robotpy-pathfinder
+    robotpy-installer install-opkg python37-robotpy-pathfinder
+
+Installation (Windows)
+----------------------
+
+We now publish Windows binaries for pathfinder, you should be able to
+install them via pip on supported versions of Python 3:
+
+.. code-block:: bash
+
+    py -m pip install robotpy-pathfinder
 
 Installation (other)
 --------------------
 
 Note that this requires a C++11 compiler to be present on your system, as I'm
-not currently publishing wheels of this library.
+not currently publishing non-Windows wheels of this library.
 
 .. code-block:: bash
 
